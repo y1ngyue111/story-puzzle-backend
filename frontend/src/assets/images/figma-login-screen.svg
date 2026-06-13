@@ -1,0 +1,70 @@
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1440" height="900" fill="#F7FAFF"/>
+  <path d="M0 0H1440V900H0V0Z" fill="url(#pageBg)"/>
+  <path d="M78 122C116 74 181 52 248 76L510 170C568 191 594 258 566 313L438 568C411 621 346 643 292 616L122 531C66 503 44 435 73 380L119 292C148 236 38 172 78 122Z" fill="#DDFAF5"/>
+  <path d="M1018 76C1088 34 1178 56 1219 126L1346 341C1385 408 1363 494 1297 535L1063 680C995 722 906 699 864 631L765 468C723 400 744 311 812 268L1018 76Z" fill="#FFF3D8"/>
+
+  <rect x="120" y="104" width="1200" height="692" rx="8" fill="#FFFFFF" fill-opacity="0.82" stroke="#E3E8F0"/>
+
+  <g font-family="Arial, 'PingFang SC', sans-serif">
+    <text x="190" y="180" font-size="24" font-weight="800" fill="#252237">Story Puzzle</text>
+    <text x="190" y="302" font-size="64" font-weight="800" fill="#252237">进入故事拼图房间</text>
+    <text x="190" y="362" font-size="27" fill="#4E596F">用一件小事开始，让故事被听见。</text>
+    <text x="190" y="406" font-size="22" fill="#66607A">语音分享、同伴补充、AI 生成插画，再一起完成拼图。</text>
+
+    <rect x="190" y="488" width="150" height="46" rx="8" fill="#DDFAF5"/>
+    <text x="265" y="518" text-anchor="middle" font-size="18" font-weight="700" fill="#252237">低压力表达</text>
+    <rect x="358" y="488" width="150" height="46" rx="8" fill="#FFF7D8"/>
+    <text x="433" y="518" text-anchor="middle" font-size="18" font-weight="700" fill="#252237">同伴倾听</text>
+    <rect x="526" y="488" width="150" height="46" rx="8" fill="#F0EAFE"/>
+    <text x="601" y="518" text-anchor="middle" font-size="18" font-weight="700" fill="#252237">协作完成</text>
+
+    <g transform="translate(214 592)">
+      <rect x="0" y="0" width="260" height="118" rx="8" fill="#F7FAFF" stroke="#E3E8F0"/>
+      <rect x="24" y="24" width="70" height="70" rx="8" fill="#EAF7F3"/>
+      <path d="M37 64C62 38 84 58 77 78C70 98 38 92 37 64Z" fill="#4FD1C5" fill-opacity="0.72"/>
+      <text x="118" y="48" font-size="17" font-weight="800" fill="#252237">共享屏幕</text>
+      <text x="118" y="78" font-size="15" fill="#66607A">一台 iPad 即可开始</text>
+    </g>
+    <g transform="translate(494 592)">
+      <rect x="0" y="0" width="260" height="118" rx="8" fill="#F7FAFF" stroke="#E3E8F0"/>
+      <rect x="24" y="24" width="70" height="70" rx="8" fill="#FFF3D8"/>
+      <path d="M59 39C50 39 45 47 45 58C45 69 50 77 59 77C68 77 73 69 73 58C73 47 68 39 59 39Z" stroke="#252237" stroke-width="4"/>
+      <path d="M38 63C38 84 47 94 59 94C71 94 80 84 80 63" stroke="#252237" stroke-width="4" stroke-linecap="round"/>
+      <text x="118" y="48" font-size="17" font-weight="800" fill="#252237">语音输入</text>
+      <text x="118" y="78" font-size="15" fill="#66607A">不用准备完整故事</text>
+    </g>
+  </g>
+
+  <g transform="translate(860 174)" font-family="Arial, 'PingFang SC', sans-serif">
+    <rect x="0" y="0" width="360" height="552" rx="8" fill="#FFFFFF" stroke="#E3E8F0" stroke-width="2"/>
+    <text x="40" y="72" font-size="30" font-weight="800" fill="#252237">欢迎回来</text>
+    <text x="40" y="112" font-size="17" fill="#66607A">输入房间码和昵称，开始这一轮。</text>
+
+    <text x="40" y="176" font-size="15" font-weight="700" fill="#252237">房间码</text>
+    <rect x="40" y="194" width="280" height="58" rx="8" fill="#F7FAFF" stroke="#DDE4EA"/>
+    <text x="62" y="230" font-size="18" fill="#8A849B">例如：428916</text>
+
+    <text x="40" y="296" font-size="15" font-weight="700" fill="#252237">昵称</text>
+    <rect x="40" y="314" width="280" height="58" rx="8" fill="#F7FAFF" stroke="#DDE4EA"/>
+    <text x="62" y="350" font-size="18" fill="#8A849B">输入你的名字</text>
+
+    <rect x="40" y="412" width="280" height="58" rx="8" fill="url(#primaryBtn)"/>
+    <text x="180" y="448" text-anchor="middle" font-size="19" font-weight="800" fill="#252237">进入房间</text>
+
+    <rect x="40" y="494" width="280" height="1" fill="#E3E8F0"/>
+    <text x="180" y="528" text-anchor="middle" font-size="15" fill="#66607A">没有房间码？先创建一个房间</text>
+  </g>
+
+  <defs>
+    <linearGradient id="pageBg" x1="0" y1="0" x2="1440" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EDF6F1"/>
+      <stop offset="0.5" stop-color="#F7FAFF"/>
+      <stop offset="1" stop-color="#EAF3F7"/>
+    </linearGradient>
+    <linearGradient id="primaryBtn" x1="40" y1="412" x2="320" y2="470" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4FD1C5"/>
+      <stop offset="1" stop-color="#FFD45B"/>
+    </linearGradient>
+  </defs>
+</svg>

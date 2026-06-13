@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    svg { stroke: #18252d; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .nostroke { stroke: none; }
+    .thin { stroke-width: 2.2; }
+    .spark { stroke: #f9cf47; stroke-width: 4; }
+  </style><circle fill="#f4b0d3" cx="23" cy="25" r="13"/><circle fill="#f4b0d3" cx="41" cy="25" r="13"/><circle fill="#f4b0d3" cx="32" cy="42" r="13"/><circle fill="#f9cf47" cx="32" cy="31" r="8"/><path class="thin" d="M28 31c2 3 6 3 8 0"/></svg>

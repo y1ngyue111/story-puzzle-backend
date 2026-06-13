@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    svg { stroke: #18252d; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .nostroke { stroke: none; }
+    .thin { stroke-width: 2.2; }
+    .spark { stroke: #f9cf47; stroke-width: 4; }
+  </style><path fill="#f4b0d3" d="M32 11c18 0 27 12 21 24-5 9-14 4-17 11-2 5-9 8-17 3C2 39 11 11 32 11z"/><circle fill="#f9cf47" cx="24" cy="25" r="4"/><circle fill="#9bd8f4" cx="36" cy="20" r="4"/><circle fill="#a3e4d7" cx="42" cy="32" r="4"/></svg>

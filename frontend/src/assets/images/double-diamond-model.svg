@@ -1,0 +1,43 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="900" rx="48" fill="#F7FAFF"/>
+  <circle cx="250" cy="160" r="180" fill="#EAF7F3"/>
+  <circle cx="1320" cy="740" r="220" fill="#F0EAFE"/>
+  <path d="M120 450 L410 230 L700 450 L410 670 Z" fill="#EAF7F3" stroke="#46B998" stroke-width="6"/>
+  <path d="M700 450 L990 230 L1280 450 L990 670 Z" fill="#F0EAFE" stroke="#8D73E8" stroke-width="6"/>
+  <path d="M700 450 L742 428 L742 472 Z" fill="#253047"/>
+  <path d="M410 450 H690" stroke="#253047" stroke-width="5" stroke-linecap="round" stroke-dasharray="14 16"/>
+  <path d="M710 450 H990" stroke="#253047" stroke-width="5" stroke-linecap="round" stroke-dasharray="14 16"/>
+  <text x="800" y="92" text-anchor="middle" fill="#253047" font-family="Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="52" font-weight="700">双钻设计模型</text>
+  <text x="800" y="148" text-anchor="middle" fill="#687086" font-family="Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="26">轻社交语音故事拼图项目</text>
+
+  <text x="170" y="405" fill="#253047" font-family="Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="34" font-weight="700">Discover</text>
+  <text x="170" y="448" fill="#253047" font-family="Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="28" font-weight="700">发现问题</text>
+  <text x="170" y="502" fill="#4E596F" font-family="Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="24">社交表达压力</text>
+  <text x="170" y="538" fill="#4E596F" font-family="Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="24">怕尴尬、怕说不好</text>
+
+  <text x="410" y="390" text-anchor="middle" fill="#253047" font-family="Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="34" font-weight="700">Define</text>
+  <text x="410" y="433" text-anchor="middle" fill="#253047" font-family="Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="28" font-weight="700">定义问题</text>
+  <text x="410" y="488" text-anchor="middle" fill="#4E596F" font-family="Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="23">如何让表达变成</text>
+  <text x="410" y="524" text-anchor="middle" fill="#4E596F" font-family="Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="23">被倾听和共同完成？</text>
+
+  <text x="990" y="390" text-anchor="middle" fill="#253047" font-family="Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="34" font-weight="700">Develop</text>
+  <text x="990" y="433" text-anchor="middle" fill="#253047" font-family="Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="28" font-weight="700">发展方案</text>
+  <text x="990" y="488" text-anchor="middle" fill="#4E596F" font-family="Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="23">语音输入、同伴提问</text>
+  <text x="990" y="524" text-anchor="middle" fill="#4E596F" font-family="Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="23">AI 生图、协作拼图</text>
+
+  <text x="1185" y="405" fill="#253047" font-family="Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="34" font-weight="700">Deliver</text>
+  <text x="1185" y="448" fill="#253047" font-family="Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="28" font-weight="700">交付原型</text>
+  <text x="1185" y="502" fill="#4E596F" font-family="Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="24">单屏 iPad 体验</text>
+  <text x="1185" y="538" fill="#4E596F" font-family="Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="24">4x4 拼图、3 分钟限时</text>
+
+  <rect x="196" y="720" width="210" height="60" rx="30" fill="#FFFFFF" stroke="#46B998" stroke-width="3"/>
+  <text x="301" y="759" text-anchor="middle" fill="#253047" font-family="Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="22" font-weight="700">发散探索</text>
+  <rect x="512" y="720" width="210" height="60" rx="30" fill="#FFFFFF" stroke="#46B998" stroke-width="3"/>
+  <text x="617" y="759" text-anchor="middle" fill="#253047" font-family="Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="22" font-weight="700">收敛定义</text>
+  <rect x="880" y="720" width="210" height="60" rx="30" fill="#FFFFFF" stroke="#8D73E8" stroke-width="3"/>
+  <text x="985" y="759" text-anchor="middle" fill="#253047" font-family="Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="22" font-weight="700">发散方案</text>
+  <rect x="1196" y="720" width="210" height="60" rx="30" fill="#FFFFFF" stroke="#8D73E8" stroke-width="3"/>
+  <text x="1301" y="759" text-anchor="middle" fill="#253047" font-family="Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="22" font-weight="700">收敛交付</text>
+
+  <text x="700" y="845" text-anchor="middle" fill="#687086" font-family="Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="22">核心设计命题：降低表达压力，让故事被听见，并转化为共同完成的拼图体验</text>
+</svg>

@@ -1,0 +1,22 @@
+const envBase = (import.meta.env.VITE_API_BASE || '').replace(/\/$/, '')
+
+const defaultOrigin = (() => {
+  if (typeof window === 'undefined') return 'http://127.0.0.1:3000'
+  const { protocol, hostname } = window.location
+  return `${protocol}//${hostname || '127.0.0.1'}:3000`
+})()
+
+export const API_ORIGIN = envBase || defaultOrigin
+export const API_BASE_URL = `${API_ORIGIN}/api`
+
+export function apiUrl(path) {
+  if (!path) return API_ORIGIN
+  if (/^https?:\/\//.test(path)) return path
+  return `${API_ORIGIN}${path.startsWith('/') ? path : `/${path}`}`
+}
+
+export function normalizeAssetUrl(url) {
+  if (!url) return ''
+  if (/^https?:\/\//.test(url)) return url
+  return apiUrl(url)
+}

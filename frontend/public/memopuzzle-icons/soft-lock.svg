@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    svg { stroke: #18252d; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .nostroke { stroke: none; }
+    .thin { stroke-width: 2.2; }
+    .spark { stroke: #f9cf47; stroke-width: 4; }
+  </style><rect fill="#fff" x="14" y="28" width="36" height="27" rx="9"/><path d="M21 28v-7c0-15 22-15 22 0v7"/><circle fill="#dde3ea" cx="32" cy="41" r="4"/></svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    svg { stroke: #18252d; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .nostroke { stroke: none; }
+    .thin { stroke-width: 2.2; }
+    .spark { stroke: #f9cf47; stroke-width: 4; }
+  </style><path fill="#fff" d="M18 11h28v42H18z"/><path d="M18 11h28v42H18zM24 22h16M24 30h16M24 38h11"/><path fill="#f9cf47" d="m40 11 6 6v-6z"/></svg>
