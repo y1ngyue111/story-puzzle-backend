@@ -9,8 +9,9 @@ const fs = require('fs')
 const { transcodeToWav16kMono } = require('../services/audioTranscode')
 const { recognizeShortWav } = require('../services/tencentAsr')
 
-// 确保上传目录存在
-const uploadDir = path.join(__dirname, '..', 'uploads', 'records')
+// Vercel serverless 运行时只有 /tmp 可写，本地也可以安全使用。
+const uploadRoot = process.env.VERCEL ? '/tmp' : path.join(__dirname, '..')
+const uploadDir = path.join(uploadRoot, 'uploads', 'records')
 fs.mkdirSync(uploadDir, { recursive: true })
 
 // Multer 配置

@@ -450,10 +450,12 @@ const applyRecognizedText = (target, text) => {
 }
 
 const postAsrAudio = async (blob, filename) => {
+  const isLocalHost =
+    typeof window !== 'undefined' &&
+    ['localhost', '127.0.0.1'].includes(window.location.hostname)
   const endpoints = [
     apiUrl('/api/asr'),
-    'http://127.0.0.1:3000/api/asr',
-    'http://localhost:3000/api/asr'
+    ...(isLocalHost ? ['http://127.0.0.1:3000/api/asr', 'http://localhost:3000/api/asr'] : [])
   ].filter((url, index, list) => list.indexOf(url) === index)
 
   let lastError = null
