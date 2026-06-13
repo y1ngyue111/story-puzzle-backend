@@ -1,13 +1,14 @@
 // backend/services/audioTranscode.js
 const { execFile } = require('child_process')
 const path = require('path')
+const ffmpegPath = require('ffmpeg-static')
 
 function transcodeToWav16kMono(inputPath) {
   const parsed = path.parse(inputPath)
   const outputPath = path.join(parsed.dir, `${parsed.name}-16k-mono.wav`)
   return new Promise((resolve, reject) => {
     execFile(
-      'ffmpeg',
+      ffmpegPath || 'ffmpeg',
       [
         '-y',
         '-i', inputPath,
