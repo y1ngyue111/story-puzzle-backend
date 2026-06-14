@@ -48,7 +48,12 @@ router.post('/', (req, res) => {
       const text = await recognizeShortWav(wavPath)
       return res.json({ code: 200, data: { text } })
     } catch (e) {
-      console.error('[ASR] error:', e)
+      console.error('[ASR] error:', {
+        code: e?.code,
+        message: e?.message,
+        requestId: e?.requestId,
+        inputBytes: req.file?.size
+      })
       const message =
         e?.code === 'AuthFailure.SecretIdNotFound'
           ? '腾讯云 SecretId 不存在或不正确，请检查 TENCENT_SECRET_ID'
