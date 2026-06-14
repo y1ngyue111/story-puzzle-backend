@@ -110,7 +110,7 @@ import { computed, defineComponent, h, nextTick, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Toast } from 'vant'
 import axios from 'axios'
-import { apiUrl, normalizeAssetUrl } from '@/utils/api/base'
+import { apiUrl, normalizeAssetUrl, publicAssetUrl } from '@/utils/api/base'
 
 const flow = [
   ['1', '创建房间', '1 min'],
@@ -616,8 +616,8 @@ const iconComponent = (name, filename) => defineComponent({
   },
   setup(props, { attrs }) {
     const resolveIconSrc = () => {
-      if (name === 'icon-voice' && props.active) return '/memopuzzle-icons/voice-stop.svg?v=black1'
-      return filename.startsWith('/') ? filename : `/memopuzzle-icons/${filename}`
+      if (name === 'icon-voice' && props.active) return publicAssetUrl('/memopuzzle-icons/voice-stop.svg?v=black1')
+      return publicAssetUrl(filename.startsWith('/') ? filename : `/memopuzzle-icons/${filename}`)
     }
 
     return () => h('span', {
@@ -746,7 +746,7 @@ const ListeningSprite = defineComponent({
   props: { label: { type: String, default: '帕托 · 倾听陪伴' } },
   setup(props) {
     return () => h('span', { class: 'sprite' }, [
-      h('img', { class: 'sprite-asset listening-sprite-asset ip-png-asset', src: '/memopuzzle-ip/patto-listening.png?v=ip20260611', alt: '' }),
+      h('img', { class: 'sprite-asset listening-sprite-asset ip-png-asset', src: publicAssetUrl('/memopuzzle-ip/patto-listening.png?v=ip20260611'), alt: '' }),
       h('span', { class: 'sprite-label' }, props.label)
     ])
   }
@@ -756,7 +756,7 @@ const CuriousSprite = defineComponent({
   props: { label: { type: String, default: '啵啵 · 协作提问' } },
   setup(props) {
     return () => h('span', { class: 'sprite' }, [
-      h('img', { class: 'sprite-asset curious-sprite-asset ip-png-asset', src: '/memopuzzle-ip/bobo-work.png?v=ip20260611', alt: '' }),
+      h('img', { class: 'sprite-asset curious-sprite-asset ip-png-asset', src: publicAssetUrl('/memopuzzle-ip/bobo-work.png?v=ip20260611'), alt: '' }),
       h('span', { class: 'sprite-label' }, props.label)
     ])
   }
@@ -769,7 +769,7 @@ const BloomSprite = defineComponent({
   },
   setup(props) {
     return () => h('span', { class: ['sprite', { 'is-decorative': props.decorative }] }, [
-      h('img', { class: 'sprite-asset bloom-sprite-asset ip-png-asset', src: '/memopuzzle-ip/dodo-happy.png?v=ip20260611', alt: '' }),
+      h('img', { class: 'sprite-asset bloom-sprite-asset ip-png-asset', src: publicAssetUrl('/memopuzzle-ip/dodo-happy.png?v=ip20260611'), alt: '' }),
       h('span', { class: 'sprite-label' }, props.label)
     ])
   }

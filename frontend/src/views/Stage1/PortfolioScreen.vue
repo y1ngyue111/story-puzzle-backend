@@ -167,7 +167,7 @@
                 </div>
               </dl>
               <div class="dodo-note">
-                <span><img src="/memopuzzle-ip/dodo-happy.png?v=ip20260611" alt="" /></span>
+                <span><img :src="publicAssetUrl('/memopuzzle-ip/dodo-happy.png?v=ip20260611')" alt="" /></span>
                 <p>朵朵正在守着回忆。讲过的小事会合进相册，也可以收藏、重看与导出。</p>
               </div>
               <button type="button" class="open-memory-btn">打开回忆</button>
@@ -197,10 +197,11 @@
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import sceneImage from '@/assets/images/portfolio-usage-scene.png'
+import { publicAssetUrl } from '@/utils/api/base'
 
 const route = useRoute()
 const router = useRouter()
-const galleryHeroImage = '/memopuzzle-gallery/gallery-hero.svg'
+const galleryHeroImage = publicAssetUrl('/memopuzzle-gallery/gallery-hero.svg')
 
 const screenMap = {
   ready: {
@@ -226,10 +227,10 @@ const screenMap = {
 }
 
 const sideNavItems = [
-  { kind: 'ready', label: '准备加入', path: '/portfolio-ready', icon: '/memopuzzle-icons/nav-rule.svg' },
-  { kind: 'generating', label: 'AI 等待', path: '/portfolio-generating', icon: '/memopuzzle-icons/nav-ai-waiting.svg' },
-  { kind: 'complete', label: '完成回看', path: '/portfolio-complete', icon: '/memopuzzle-icons/nav-review.svg' },
-  { kind: 'gallery', label: '作品回顾', path: '/portfolio-gallery', icon: '/memopuzzle-icons/nav-gallery.svg' }
+  { kind: 'ready', label: '准备加入', path: '/portfolio-ready', icon: publicAssetUrl('/memopuzzle-icons/nav-rule.svg') },
+  { kind: 'generating', label: 'AI 等待', path: '/portfolio-generating', icon: publicAssetUrl('/memopuzzle-icons/nav-ai-waiting.svg') },
+  { kind: 'complete', label: '完成回看', path: '/portfolio-complete', icon: publicAssetUrl('/memopuzzle-icons/nav-review.svg') },
+  { kind: 'gallery', label: '作品回顾', path: '/portfolio-gallery', icon: publicAssetUrl('/memopuzzle-icons/nav-gallery.svg') }
 ]
 
 const galleryItems = [
@@ -239,7 +240,7 @@ const galleryItems = [
     badge: '和同伴一起',
     icon: '✨',
     tone: 'blue',
-    image: '/memopuzzle-gallery/afternoon-walk.svg'
+    image: publicAssetUrl('/memopuzzle-gallery/afternoon-walk.svg')
   },
   {
     title: '窗边阳光',
@@ -247,7 +248,7 @@ const galleryItems = [
     badge: '最喜欢',
     icon: '⭐',
     tone: 'peach',
-    image: '/memopuzzle-gallery/window-sun.svg'
+    image: publicAssetUrl('/memopuzzle-gallery/window-sun.svg')
   },
   {
     title: '雨天的小路',
@@ -255,7 +256,7 @@ const galleryItems = [
     badge: '能不记录',
     icon: '☔',
     tone: 'mint',
-    image: '/memopuzzle-gallery/rainy-path.svg'
+    image: publicAssetUrl('/memopuzzle-gallery/rainy-path.svg')
   },
   {
     title: '和小林',
@@ -263,7 +264,7 @@ const galleryItems = [
     badge: '和同伴一起',
     icon: '🌿',
     tone: 'lavender',
-    image: '/memopuzzle-gallery/friends-garden.svg'
+    image: publicAssetUrl('/memopuzzle-gallery/friends-garden.svg')
   },
   {
     title: '安静的傍晚',
@@ -271,7 +272,7 @@ const galleryItems = [
     badge: '随手记录',
     icon: '⭐',
     tone: 'pink',
-    image: '/memopuzzle-gallery/quiet-pond.svg'
+    image: publicAssetUrl('/memopuzzle-gallery/quiet-pond.svg')
   },
   {
     title: '拼图完成',
@@ -279,7 +280,7 @@ const galleryItems = [
     badge: '最喜欢',
     icon: '🍀',
     tone: 'yellow',
-    image: '/memopuzzle-gallery/puzzle-rainbow.svg'
+    image: publicAssetUrl('/memopuzzle-gallery/puzzle-rainbow.svg')
   }
 ]
 
