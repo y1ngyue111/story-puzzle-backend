@@ -341,8 +341,73 @@ let mediaRecorder = null
 let mediaStream = null
 let audioChunks = []
 let recordingStartedAt = 0
+let speechRecognition = null
+let speechTranscript = ''
 
 const MIN_RECORD_MS = 1200
+
+const getSpeechRecognitionCtor = () => {
+  if (typeof window === 'undefined') return null
+  return window.SpeechRecognition || window.webkitSpeechRecognition || null
+}
+
+const startBrowserSpeechRecognition = () => {
+  const Recognition = getSpeechRecognitionCtor()
+  speechTranscript = ''
+  if (!Recognition) return false
+
+  try {
+    const recognition = new Recognition()
+    recognition.lang = 'zh-CN'
+    recognition.continuous = true
+    recognition.interimResults = true
+    recognition.onresult = (event) => {
+      speechTranscript = Array.from(event.results)
+        .map((result) => result?.[0]?.transcript || '')
+        .join('')
+        .trim()
+    }
+    recognition.onerror = () => {}
+    recognition.onend = () => {
+      if (speechRecognition === recognition) {
+        speechRecognition = null
+      }
+    }
+    recognition.start()
+    speechRecognition = recognition
+    return true
+  } catch (_) {
+    speechRecognition = null
+    return false
+  }
+}
+
+const stopBrowserSpeechRecognition = () => new Promise((resolve) => {
+  if (!speechRecognition) {
+    resolve(speechTranscript.trim())
+    return
+  }
+
+  const recognition = speechRecognition
+  let settled = false
+  const finish = () => {
+    if (settled) return
+    settled = true
+    if (speechRecognition === recognition) {
+      speechRecognition = null
+    }
+    resolve(speechTranscript.trim())
+  }
+
+  recognition.onend = finish
+  window.setTimeout(finish, 900)
+
+  try {
+    recognition.stop()
+  } catch (_) {
+    finish()
+  }
+})
 
 const getRecorderOptions = () => {
   if (typeof MediaRecorder === 'undefined') return {}
@@ -364,6 +429,13 @@ const getRecordFilename = (mimeType = '') => {
 }
 
 const cleanupMic = () => {
+  if (speechRecognition) {
+    try {
+      speechRecognition.abort()
+    } catch (_) {}
+    speechRecognition = null
+  }
+
   try {
     if (mediaRecorder && mediaRecorder.state !== 'inactive') {
       mediaRecorder.stop()
@@ -411,6 +483,12 @@ const startRecord = async (target = 'story') => {
     mediaRecorder.start(250)
     recordingStartedAt = Date.now()
     voiceStatus.value = 'recording'
+    const browserSpeechReady = startBrowserSpeechRecognition()
+    if (!browserSpeechReady) {
+      voiceHint.value = target === 'story'
+        ? '正在录故事...当前浏览器不支持本地识别，将上传到语音服务'
+        : '正在录细节...当前浏览器不支持本地识别，将上传到语音服务'
+    }
   } catch (error) {
     console.error(error)
     Toast.fail('无法使用麦克风')
@@ -486,6 +564,7 @@ const stopAndRecognize = async (target = activeVoiceTarget.value || 'story') => 
     voiceHint.value = '正在结束录音并上传...'
     mode.value = target === 'story' ? 'recognizing' : 'followRecognizing'
     const mimeType = mediaRecorder.mimeType || 'audio/webm'
+    const browserSpeechTextPromise = stopBrowserSpeechRecognition()
 
     const blob = await new Promise((resolve) => {
       mediaRecorder.onstop = () => {
@@ -497,8 +576,15 @@ const stopAndRecognize = async (target = activeVoiceTarget.value || 'story') => 
       mediaRecorder.stop()
     })
 
+    const browserSpeechText = await browserSpeechTextPromise
     cleanupMic()
     if (blob.size < 1024) {
+      if (browserSpeechText) {
+        applyRecognizedText(target, browserSpeechText)
+        Toast.success('已使用浏览器识别结果')
+        voiceHint.value = '录音文件较短，已使用浏览器识别结果'
+        return
+      }
       throw new Error('录音太短，请按住节奏说完一句后再点停止')
     }
 
@@ -507,24 +593,35 @@ const stopAndRecognize = async (target = activeVoiceTarget.value || 'story') => 
 
     const response = await postAsrAudio(blob, getRecordFilename(mimeType))
 
-    const text = response?.data?.data?.text
+    const text = response?.data?.data?.text || browserSpeechText
     if (response?.data?.code === 200 && text) {
       applyRecognizedText(target, text)
       Toast.success('识别完成')
       voiceHint.value = target === 'story'
         ? '故事识别完成，可以确认后进入提问'
         : '细节识别完成，会一起用于生成图片'
+    } else if (browserSpeechText) {
+      applyRecognizedText(target, browserSpeechText)
+      Toast.success('已使用浏览器识别结果')
+      voiceHint.value = '后端语音服务没有返回文字，已使用浏览器识别结果'
     } else {
       throw new Error(response?.data?.message || '语音识别失败')
     }
   } catch (error) {
     console.error(error)
-    const message = error?.code === 'ERR_NETWORK'
-      ? '连接不到语音服务，请确认后端 3000 已启动'
-      : error?.response?.data?.message || error.message || '语音识别失败'
-    Toast.fail(message)
-    voiceHint.value = message
-    mode.value = target === 'story' ? 'idle' : 'follow'
+    const browserSpeechText = speechTranscript.trim()
+    if (browserSpeechText) {
+      applyRecognizedText(target, browserSpeechText)
+      Toast.success('已使用浏览器识别结果')
+      voiceHint.value = '连接不到语音服务，已使用浏览器识别结果'
+    } else {
+      const message = error?.code === 'ERR_NETWORK'
+        ? '连接不到语音服务'
+        : error?.response?.data?.message || error.message || '语音识别失败'
+      Toast.fail(message)
+      voiceHint.value = `${message}，请改用直接输入`
+      mode.value = target === 'story' ? 'idle' : 'follow'
+    }
   } finally {
     voiceStatus.value = 'idle'
     activeVoiceTarget.value = null
