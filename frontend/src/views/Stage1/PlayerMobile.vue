@@ -989,8 +989,80 @@ const handleCellClick = (gridIndex) => {
 let mediaRecorder = null
 let mediaStream = null
 let audioChunks = []
+let speechRecognition = null
+let speechTranscript = ''
+
+const getSpeechRecognitionCtor = () => {
+  if (typeof window === 'undefined') return null
+  return window.SpeechRecognition || window.webkitSpeechRecognition || null
+}
+
+const stopBrowserSpeechRecognition = () => new Promise((resolve) => {
+  if (!speechRecognition) {
+    resolve(speechTranscript.trim())
+    return
+  }
+
+  const recognition = speechRecognition
+  let settled = false
+  const finish = () => {
+    if (settled) return
+    settled = true
+    if (speechRecognition === recognition) {
+      speechRecognition = null
+    }
+    resolve(speechTranscript.trim())
+  }
+
+  recognition.onend = finish
+  window.setTimeout(finish, 900)
+
+  try {
+    recognition.stop()
+  } catch (_) {
+    finish()
+  }
+})
+
+const startBrowserSpeechRecognition = () => {
+  const Recognition = getSpeechRecognitionCtor()
+  speechTranscript = ''
+  if (!Recognition) return false
+
+  try {
+    const recognition = new Recognition()
+    recognition.lang = 'zh-CN'
+    recognition.continuous = true
+    recognition.interimResults = true
+    recognition.onresult = (event) => {
+      speechTranscript = Array.from(event.results)
+        .map((result) => result?.[0]?.transcript || '')
+        .join('')
+        .trim()
+    }
+    recognition.onerror = () => {}
+    recognition.onend = () => {
+      if (speechRecognition === recognition) {
+        speechRecognition = null
+      }
+    }
+    recognition.start()
+    speechRecognition = recognition
+    return true
+  } catch (_) {
+    speechRecognition = null
+    return false
+  }
+}
 
 const cleanupMic = () => {
+  if (speechRecognition) {
+    try {
+      speechRecognition.abort()
+    } catch (_) {}
+    speechRecognition = null
+  }
+
   try {
     if (mediaRecorder && mediaRecorder.state !== 'inactive') {
       mediaRecorder.stop()
@@ -1033,12 +1105,19 @@ const startRecord = async (target = 'story') => {
     }
 
     mediaRecorder.start()
+    const browserSpeechReady = startBrowserSpeechRecognition()
     voiceStatus.value = 'recording'
     voiceHint.value = target === 'story'
-      ? '正在录故事…再点一次结束并识别'
+      ? browserSpeechReady
+        ? '正在录故事…再点一次结束并识别'
+        : '正在录故事…当前浏览器不支持本地识别，将上传到语音服务'
       : target === 'narrator'
-        ? '正在录讲述者补充…再点一次结束并识别'
-        : '正在录同伴补充…再点一次结束并识别'
+        ? browserSpeechReady
+          ? '正在录讲述者补充…再点一次结束并识别'
+          : '正在录讲述者补充…当前浏览器不支持本地识别，将上传到语音服务'
+        : browserSpeechReady
+          ? '正在录同伴补充…再点一次结束并识别'
+          : '正在录同伴补充…当前浏览器不支持本地识别，将上传到语音服务'
   } catch (err) {
     console.error(err)
     Toast.fail('无法使用麦克风')
@@ -1055,6 +1134,7 @@ const stopAndRecognize = async (target = activeVoiceTarget.value) => {
   try {
     voiceStatus.value = 'uploading'
     voiceHint.value = '正在结束录音并上传…'
+    const browserSpeechTextPromise = stopBrowserSpeechRecognition()
 
     const blob = await new Promise((resolve) => {
       mediaRecorder.onstop = () => {
@@ -1063,6 +1143,7 @@ const stopAndRecognize = async (target = activeVoiceTarget.value) => {
       mediaRecorder.stop()
     })
 
+    const browserSpeechText = await browserSpeechTextPromise
     cleanupMic()
 
     voiceStatus.value = 'recognizing'
@@ -1076,7 +1157,7 @@ const stopAndRecognize = async (target = activeVoiceTarget.value) => {
       timeout: 60000
     })
 
-    const text = res?.data?.data?.text
+    const text = res?.data?.data?.text || browserSpeechText
     if (res?.data?.code === 200 && text) {
       applyRecognizedText(target, text)
       if ((target === 'visual' || target === 'emotion') && storyTextBeforeCompanionVoice.value) {
@@ -1088,15 +1169,34 @@ const stopAndRecognize = async (target = activeVoiceTarget.value) => {
         : target === 'narrator'
           ? '讲述者补充完成，会一起用于生成图片'
           : '补充识别完成，会一起用于生成图片'
+    } else if (browserSpeechText) {
+      applyRecognizedText(target, browserSpeechText)
+      if ((target === 'visual' || target === 'emotion') && storyTextBeforeCompanionVoice.value) {
+        storyText.value = storyTextBeforeCompanionVoice.value
+      }
+      Toast.success('已使用浏览器识别结果')
+      voiceHint.value = '后端语音服务没有返回文字，已使用浏览器识别结果'
     } else {
       Toast.fail('语音识别失败')
-      voiceHint.value = '识别失败，请改用文字输入'
+      voiceHint.value = '识别失败，且浏览器没有得到可用文字，请改用直接输入'
     }
   } catch (err) {
     console.error(err)
-    const message = err?.response?.data?.message || '语音识别失败'
-    Toast.fail(message)
-    voiceHint.value = message
+    const browserSpeechText = speechTranscript.trim()
+    if (browserSpeechText) {
+      applyRecognizedText(target, browserSpeechText)
+      if ((target === 'visual' || target === 'emotion') && storyTextBeforeCompanionVoice.value) {
+        storyText.value = storyTextBeforeCompanionVoice.value
+      }
+      Toast.success('已使用浏览器识别结果')
+      voiceHint.value = '连接不到语音服务，已使用浏览器识别结果'
+    } else {
+      const message = err?.code === 'ERR_NETWORK'
+        ? '连接不到语音服务'
+        : err?.response?.data?.message || '语音识别失败'
+      Toast.fail(message)
+      voiceHint.value = `${message}，请改用直接输入`
+    }
   } finally {
     voiceStatus.value = 'idle'
     activeVoiceTarget.value = null
