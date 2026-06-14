@@ -4,6 +4,8 @@ const router = express.Router()
 const multer = require('multer')
 const path = require('path')
 const fs = require('fs')
+const { execFile } = require('child_process')
+const ffmpegPath = require('ffmpeg-static')
 
 // 后端音频处理服务
 const { transcodeToWav16kMono } = require('../services/audioTranscode')
@@ -24,6 +26,42 @@ const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } }) // 10
 
 router.get('/health', (_req, res) => {
   res.json({ code: 200, message: 'ASR service is available' })
+})
+
+router.get('/diagnostics', async (_req, res) => {
+  const checks = {
+    runtime: process.env.VERCEL ? 'vercel' : 'local',
+    hasTencentSecretId: Boolean(String(process.env.TENCENT_SECRET_ID || '').trim()),
+    hasTencentSecretKey: Boolean(String(process.env.TENCENT_SECRET_KEY || '').trim()),
+    tencentRegion: process.env.TENCENT_REGION || process.env.TTENCENT_REGION || 'ap-beijing',
+    ffmpegPath: ffmpegPath ? 'bundled' : 'system',
+    ffmpegExists: ffmpegPath ? fs.existsSync(ffmpegPath) : null,
+    uploadDir,
+    uploadDirWritable: false,
+    ffmpegRunnable: false
+  }
+
+  try {
+    fs.mkdirSync(uploadDir, { recursive: true })
+    fs.accessSync(uploadDir, fs.constants.W_OK)
+    checks.uploadDirWritable = true
+  } catch (e) {
+    checks.uploadDirError = e.message
+  }
+
+  try {
+    await new Promise((resolve, reject) => {
+      execFile(ffmpegPath || 'ffmpeg', ['-version'], { timeout: 5000 }, (err) => {
+        if (err) reject(err)
+        else resolve()
+      })
+    })
+    checks.ffmpegRunnable = true
+  } catch (e) {
+    checks.ffmpegError = e.message
+  }
+
+  res.json({ code: 200, data: checks })
 })
 
 // POST /api/asr -> 接收音频并识别
