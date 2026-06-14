@@ -1,0 +1,1 @@
+import{h as t}from"./http-yP5ql9Rg.js";function e(o){return t.post("/room/create",{hostName:o})}function m(o,r){return t.post("/room/join",{roomCode:o,playerName:r})}function a(o){return t.get(`/room/${o}`)}export{e as c,a as g,m as j};

@@ -1,1 +1,0 @@
-import{a as s,c as o}from"./base-BHvdPf9a.js";const t=s.create({baseURL:o,timeout:9e4});t.interceptors.response.use(e=>e,e=>(console.error("响应拦截器错误：",e),e.response?Promise.resolve(e.response):Promise.reject(e)));export{t as h};
