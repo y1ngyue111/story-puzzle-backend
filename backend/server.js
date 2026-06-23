@@ -158,15 +158,15 @@ function getPuzzleStylePrompt(puzzleStyle) {
     healing: [
       '【风格方向：治愈风】',
       '深色梦幻粉笔插画：以深蓝、墨绿或近黑色背景为底，加入细密点阵网格、柔和手绘线条、轻微发光的星点和彩色光雾。',
-      '把故事处理成一张温柔的黑板梦境场景：画面里可以有漂浮的小人物、小动物、叶片、星光、蝴蝶、道路、河流、窗边、桌面或生活物件，元素之间用粉笔感弧线自然连接。',
+      '把故事处理成一张温柔、连续、完整的黑板梦境场景：所有人物、小动物、叶片、星光、蝴蝶、道路、河流、窗边、桌面或生活物件都必须处在同一个空间里，元素之间用粉笔感弧线自然连接。',
       '色彩叠加蓝紫、青绿、暖黄、粉色等梦幻霓虹粉笔色，局部有柔和光晕和彩色流动痕迹，氛围安静、治愈、可爱。',
-      '可以出现装饰性的线框、箭头和几何图形，但不要出现可读文字、真实标签、Logo 或水印。'
+      '可以出现少量装饰性的光点和手绘弧线，但不要出现可读文字、真实标签、Logo、水印、画框、分隔线或拼贴边界。'
     ],
     abstract: [
       '【风格方向：抽象风】',
       '把故事情绪转化为抽象插画：流动形状、轻盈线条、半透明色面、象征性小物件和富有节奏的空间关系。',
       '保持温柔、明亮、可爱的气质，不要黑暗、尖锐或压迫；抽象但仍要能读出故事的情绪线索。',
-      '每个拼图区块都要有不同的形状、纹理、色彩层次和方向感，避免大面积纯色空白。'
+      '画面必须是一张连续的完整抽象场景，区域之间自然过渡；不要把画面做成独立小格、图标集合、贴纸拼贴或多张小插画。'
     ],
     'color-block': [
       '【风格方向：色块风】',
@@ -236,7 +236,8 @@ function buildPrompt(storyText, puzzleStyle = 'healing', companionContext = {}) 
     ...companionPrompt,
     '【核心风格】',
     ...stylePrompt,
-    '整体应该像一张完整的动画背景插画，而不是照片、海报或游戏截图。',
+    '整体应该像一张完整的动画背景插画，而不是照片、海报、游戏截图、分镜图或拼贴画。',
+    '这张图会由前端在生成之后自动切成 4x4 拼图，所以原始图片本身绝对不要画拼图格子、分隔线、边框、卡片、小画框或多张独立小图。',
     '',
     '【角色与情绪】',
     '角色造型圆润可爱，表情简单克制，动作自然，有陪伴感。',
@@ -247,10 +248,12 @@ function buildPrompt(storyText, puzzleStyle = 'healing', companionContext = {}) 
     '情绪要松弛、善意、安静、明亮，不要夸张煽情。',
     '',
     '【画面与构图】',
+    '必须是一张单一连续场景：同一时间、同一空间、同一透视关系，画面元素共享统一光源和统一地面/桌面/室内空间。',
+    '不要把不同物件分别放进一个个独立格子里；不要生成九宫格、四宫格、漫画分镜、相册拼贴、贴纸集合、物品陈列板。',
     '必须使用远景或中远景，不要近景特写，不要半身肖像，不要只画一个主体的大头画面。',
     '使用广角环境叙事构图，让人物或动物只是画面中的一部分，周围要有丰富的场景内容。',
     '构图完整、清晰、稳定，前景、中景、远景都要有内容，形成空间层次。',
-    '适合后续切成 4x4 拼图：画面每个区域都要有可识别细节，不要出现大面积空白。',
+    '适合后续切成 4x4 拼图：同一连续场景的不同位置都要有可识别细节，不要出现大面积空白。',
     '推荐横向构图，保留适量环境空间，让画面像一页可爱的治愈动画场景；环境空间必须由人物、物件、植物、室内陈设或街景细节填充。',
     '画面内容要更丰富：可以加入道路、房屋、树木、花草、远处山丘、河流、窗户、桌椅、小动物、生活物件等，但必须自然服务故事。',
     '不要把天空、云、云海、大片空旷背景作为主要画面。天空最多只能作为很小的背景缝隙或窗外点缀，不能占据画面主体区域。',
@@ -260,11 +263,12 @@ function buildPrompt(storyText, puzzleStyle = 'healing', companionContext = {}) 
     '',
     '【细节】',
     '增加小花、小草、树叶、窗光、小动物、点心、布料、书本、手作物、温柔生活物件等细节。',
-    '让画面不同区域都有小细节和小故事，适合玩家在拼图过程中辨认位置。',
+    '让画面不同区域都有属于同一个场景的小细节，适合玩家在拼图过程中辨认位置。',
     '细节要服务故事，不要堆砌，不要让主体占据画面过大比例。',
     '',
     '【严格禁止】',
     '不要文字、不要水印、不要 Logo、不要二维码、不要边框。',
+    '不要拼图格子、不要网格分割、不要分镜、不要漫画格、不要照片墙、不要相册拼贴、不要多张小插画、不要贴纸集合、不要独立物件陈列。',
     '不要近景特写、不要头像构图、不要单一主体占满画面。',
     '不要大面积天空、不要大面积云朵、不要云海、不要以云层或空旷天空作为主要背景，天空和云不能超过画面的 10%。',
     '不要写实照片、不要 3D 塑料质感、不要赛博朋克、不要暗黑恐怖、不要电影海报强光影。',
@@ -314,7 +318,7 @@ async function generateImageByText(storyText, puzzleStyle = 'healing', companion
           n: 1,
           size: '1024*1024',
           negative_prompt:
-            'large sky, wide open sky, huge sky area, clouds dominating the image, cloudscape, sea of clouds, empty sky background, sky occupying more than 10 percent, faceless person, blank face, missing facial features, missing hair, bald faceless character, mask face, empty eyes, uncanny face, scary smile, realistic photo, dramatic lighting, harsh contrast, strong backlight, heavy shadow, cinematic poster, 3d render, plastic texture, glossy surface, metallic reflection, dark mood, horror mood, dirty background, oversaturated colors, messy composition, low quality, blurry, bad anatomy, extra fingers, extra limbs, distorted face, scary expression, text, watermark, logo, frame'
+            'grid, panel layout, comic panels, storyboard, collage, photo wall, album collage, sticker sheet, multiple separate illustrations, isolated object collection, divided frames, split screen, puzzle grid drawn in image, jigsaw grid, tile borders, card borders, large sky, wide open sky, huge sky area, clouds dominating the image, cloudscape, sea of clouds, empty sky background, sky occupying more than 10 percent, faceless person, blank face, missing facial features, missing hair, bald faceless character, mask face, empty eyes, uncanny face, scary smile, realistic photo, dramatic lighting, harsh contrast, strong backlight, heavy shadow, cinematic poster, 3d render, plastic texture, glossy surface, metallic reflection, dark mood, horror mood, dirty background, oversaturated colors, messy composition, low quality, blurry, bad anatomy, extra fingers, extra limbs, distorted face, scary expression, text, watermark, logo, frame'
         }
       },
       {
